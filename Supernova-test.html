@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBS Sports App - Playbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="./assets/Color hero.webp">
+    <style>
+        :root { --header-height: 72px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #ffffff;
+        }
+
+        .navigation-bar {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 80px 20px 20px; /* left padding matches sidebar (20px) */
+            width: auto;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #ffffff;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .title-section {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+
+        .cbs-eye-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .cbs-eye-icon img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .playbook-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 22px;
+            color: #111111;
+            text-align: left;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .cbs-sports-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 22px;
+            color: #111111;
+            text-align: left;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .icons-section {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-end;
+            flex-grow: 1;
+            flex-basis: 0;
+            min-height: 1px;
+            min-width: 1px;
+            flex-shrink: 0;
+        }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .search-icon img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            inset: 12.5% 14.63% 14.63% 12.5%;
+        }
+
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 40px 40px 40px 40px;
+            width: 100%;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .hero-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            font-size: 48px;
+            line-height: 34px;
+            color: #000000;
+            text-align: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-description {
+            font-family: 'Lato', sans-serif;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 26px;
+            color: #000000;
+            text-align: left;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 100%;
+            width: min-content;
+        }
+
+        .hero-image {
+            height: 435px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            width: 869px;
+            max-width: 100%;
+            object-fit: cover;
+            display: block;
+            background-color: #f5f5f5; /* placeholder shown if image is deferred */
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+        }
+
+        
+
+        
+
+        /* Mobile density tweaks */
+        @media (max-width: 768px) {
+            .hero-section { gap: 24px; padding: 24px; }
+            .content-section { gap: 32px; padding: 16px 24px 48px 24px; }
+            
+            .side-navigation.collapsed .nav-container { display: none; }
+            .side-navigation .nav-item:first-child { cursor: pointer; }
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * { scroll-behavior: auto !important; }
+            .nav-link { transition: none !important; }
+        }
+
+        /* High contrast mode helper */
+        @media (prefers-contrast: more) {
+            .nav-link.active { background-color: #ddd; color: #000; }
+        }
+
+        /* Max content width for readability */
+        .main-content-area { max-width: 1200px; width: 100%; }
+
+
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+
+
+        /* Theme Tabs */
+        .theme-tabs { 
+            display: flex; 
+            flex-direction: row; 
+            gap: 40px; 
+            align-items: center; 
+            justify-content: flex-start; 
+            margin: 20px 0; 
+            width: 100%; 
+        }
+        .theme-tab { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 16px 0; 
+            cursor: pointer; 
+            position: relative; 
+            transition: all 0.2s ease; 
+            font-family: 'Lato', sans-serif;
+            font-size: 16px;
+            line-height: 18px;
+            color: #111111;
+        }
+        .theme-tab.active { 
+            border-bottom: 4px solid #000000; 
+        }
+        
+        .theme-tab.active {
+            font-weight: bold;
+        }
+
+        /* UCP grid (match Figma layout) */
+        .ucp-grid { display: flex; flex-direction: column; gap: 24px; margin: 20px 0; width: 100%; }
+        .ucp-row { display: grid; grid-template-columns: 80px 1fr; align-items: center; column-gap: 4px; width: 100%; }
+        .ucp-label { font-size: 16px; line-height: 20px; color: #111; }
+        .ucp-swatches { display: grid; grid-template-columns: repeat(13, 1fr); gap: 8px; width: 100%; }
+        .swatch { 
+            height: 40px; 
+            border-radius: 4.5px; 
+            border: 0.5px solid rgba(0,0,0,0.2); 
+            width: 100%; 
+            position: relative;
+            cursor: pointer;
+        }
+        
+        /* Tooltip styles */
+        .swatch::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            margin-bottom: 8px;
+        }
+        
+        .swatch::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #333;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            margin-bottom: 2px;
+        }
+        
+        .swatch:hover::before,
+        .swatch:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+
+        .page-layout {
+            display: flex;
+            width: 100%;
+        }
+
+        .left-side-nav {
+            width: 220px;
+            padding: 20px;
+            background-color: white;
+            border-right: 1px solid #eee;
+            position: sticky;
+            top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 8px;
+            font-family: 'Lato', sans-serif;
+            padding-left: 16px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-list li {
+            margin-bottom: 16px;
+        }
+
+        .nav-link {
+            display: block;
+            text-decoration: none;
+            font-size: 16px;
+            color: #6b6b6b;
+            padding: 12px 16px;
+            border-radius: 14px;
+            transition: background-color 0.2s, color 0.2s;
+            font-family: 'Lato', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f5f5;
+        }
+
+        .nav-link.active {
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .sub-nav {
+            margin-top: 8px;
+        }
+
+        .sub-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .sub-nav-list li {
+            margin-bottom: 8px;
+        }
+
+        .sub-nav-link {
+            display: block;
+            text-decoration: none;
+            font-size: 14px;
+            color: #8a8a8a;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: background-color 0.2s, color 0.2s;
+            font-family: 'Lato', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .sub-nav-link:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sub-nav-link.active {
+            background-color: #e0e0e0;
+            color: #000000;
+            font-weight: 500;
+        }
+
+        .nav-item-with-dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            position: absolute;
+            right: 8px;
+            top: 12px;
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: color 0.2s ease, background-color 0.2s ease;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 0;
+        }
+
+        .dropdown-toggle::before {
+            content: '›';
+            font-size: 24px;
+            transition: content 0.2s ease;
+        }
+
+        .dropdown-toggle.expanded::before {
+            content: '›';
+            transform: rotate(90deg);
+        }
+
+        .dropdown-toggle:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .nav-item-with-dropdown .sub-nav-list {
+            display: none;
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        .nav-item-with-dropdown.expanded .sub-nav-list {
+            display: block;
+        }
+
+        .lock-icon {
+            font-size: 14px;
+            color: #aaa;
+            margin-left: auto;
+        }
+
+        .main-content-area {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .content-section {
+            display: flex;
+            flex-direction: row;
+            gap: 60px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            position: relative;
+            padding: 0px 40px 60px 0px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-grow: 1;
+            flex-basis: 0;
+            min-height: 1px;
+            min-width: 1px;
+            flex-shrink: 0;
+        }
+
+        .content-block {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 26px;
+            color: #000000;
+            text-align: left;
+            width: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 20px;
+            color: #000000;
+            text-align: left;
+            width: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bullet-list {
+            list-style-type: disc;
+            margin-left: 24px;
+        }
+
+        .bullet-list li {
+            margin-bottom: 0;
+            line-height: 20px;
+        }
+
+        .bold-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+        }
+
+        .link-item {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+
+        .link-icon {
+            background-image: url('./assets/Figma.webp');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 16px;
+            width: 16px;
+            flex-shrink: 0;
+        }
+
+        .link-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 20px;
+            color: #111111;
+            text-align: left;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .side-navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 180px;
+            position: sticky;
+            top: calc(var(--header-height) + 20px);
+            max-height: calc(100vh - (var(--header-height) + 20px));
+            overflow: auto;
+            flex: 0 0 180px;
+        }
+
+
+
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 180px;
+            position: relative;
+            border-left: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            flex-shrink: 0;
+            cursor: default;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item[data-target] { cursor: pointer; }
+        .nav-item[data-target]:hover { background-color: rgba(0, 0, 0, 0.05); }
+
+        .nav-item.active {
+            border-left: 2px solid #000000;
+            margin-left: -2px;
+        }
+
+        .nav-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 18px;
+            color: #111111;
+            text-align: left;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-text.active {
+            font-weight: bold;
+        }
+
+        .nav-subsection {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+
+        .fundamentals-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .fundamental-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex: 1;
+        }
+
+        .fundamental-image {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 252px;
+            border-radius: 20px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .fundamental-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .fundamental-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 26px;
+            color: #000000;
+            text-align: left;
+            width: 100%;
+        }
+
+        .fundamental-description {
+            font-family: 'Lato', sans-serif;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 22px;
+            color: #000000;
+            text-align: left;
+            width: 100%;
+        }
+
+        /* Button Styles */
+        .button-showcase {
+            background-color: #f2f2f2;
+            border-radius: 24px;
+            padding: 40px;
+            margin: 20px 0;
+        }
+
+        .button-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .button-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .button-label {
+            background-color: #000000;
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: normal;
+            flex-shrink: 0;
+        }
+
+        .button-examples {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .button-example {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .button-example.primary {
+            background-color: #004ace;
+            color: #ffffff;
+        }
+
+        .button-example.secondary {
+            background-color: #ffffff;
+            color: #181818;
+            border: 1px solid #e8e8e8;
+        }
+
+        .button-example.tertiary {
+            background-color: #ffffff;
+            color: #181818;
+            border: 1px solid #dcdcdc;
+        }
+
+        .button-example.large {
+            height: 48px;
+            padding: 0 24px;
+            font-size: 18px;
+            line-height: 1.25;
+        }
+
+        .button-example.medium {
+            height: 32px;
+            padding: 0 12px;
+            font-size: 14px;
+            line-height: 14px;
+        }
+
+        .button-example.small {
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+            line-height: 12px;
+        }
+
+        .button-example.loading {
+            background-color: #dcdcdc;
+        }
+
+        .button-example.disabled {
+            background-color: #dcdcdc;
+            color: #ababab;
+        }
+
+        .loading-dots {
+            width: 26px;
+            height: 6px;
+            /* loading dots image removed to avoid blocking on localhost */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .button-description {
+            margin: 20px 0;
+        }
+
+        .emphasis-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .emphasis-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .emphasis-number {
+            background-color: #000000;
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .emphasis-text {
+            font-size: 18px;
+            line-height: 22px;
+            color: #000000;
+        }
+
+        .state-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .button-info {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+
+        .button-text {
+            flex: 1;
+        }
+
+        .button-image {
+            flex: 1;
+            max-width: 360px;
+        }
+
+        .best-practices {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .practice-item {
+            flex: 1;
+        }
+
+        .practice-example {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .example-header {
+            background-color: #f94343;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-bottom: 4px solid #ffffff;
+        }
+
+        .example-icon {
+            color: #ffffff;
+            font-size: 24px;
+        }
+
+        .example-label {
+            color: #000000;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .example-content {
+            background-color: #f5f8ff;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .phone-mockup {
+            position: absolute;
+            bottom: 74px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 521px;
+            width: 253px;
+            border-radius: 13.5px;
+            overflow: hidden;
+            border: 5.4px solid #767676;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-content {
+            width: 100%;
+            height: 100%;
+            /* phone content image removed to avoid blocking on localhost */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .side-navigation {
+                position: static;
+                width: 100%;
+            }
+            
+            .nav-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation-bar">
+        <div class="title-section">
+            <div class="cbs-eye-icon">
+                <img src="./assets/Playbook.svg" alt="Playbook logo" width="24" height="24" loading="eager" decoding="async">
+            </div>
+            <div class="playbook-text">Playbook</div>
+            <div class="cbs-sports-text">CBS Sports App</div>
+        </div>
+        <div class="icons-section">
+            <div class="search-icon">
+                
+            </div>
+        </div>
+    </nav>
+    
+    <div class="page-layout">
+        <aside class="left-side-nav">
+
+
+            <div class="sidebar-section">
+                <h3>Fundamentals</h3>
+                <ul class="nav-list">
+                    <li class="nav-item-with-dropdown expanded">
+                        <a href="#" class="nav-link dropdown-trigger" data-page="color-page" data-dropdown="color">Color</a>
+                        <button class="dropdown-toggle expanded" aria-label="Toggle Color submenu"></button>
+                        <ul class="sub-nav-list">
+                            <li><a href="#" class="sub-nav-link" data-tab="overview">Overview</a></li>
+                            <li><a href="#" class="sub-nav-link" data-tab="ucp">UCP</a></li>
+                            <li><a href="#" class="sub-nav-link" data-tab="patterns">Patterns</a></li>
+                        </ul>
+                    </li>
+                    </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Components</h3>
+                <ul class="nav-list">
+                    <li class="nav-item-with-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger" data-page="color-page-2" data-dropdown="color-2">Button</a>
+                        <button class="dropdown-toggle" aria-label="Toggle Button submenu"></button>
+                        <ul class="sub-nav-list">
+                            <li><a href="#" class="sub-nav-link" data-tab="color-2-overview">Overview</a></li>
+                            <li><a href="#" class="sub-nav-link" data-tab="color-2-patterns">Prime</a></li>
+     
+                        </ul>
+                    </li>
+                    </ul>
+            </div>
+        </aside>
+
+        <main class="main-content-area">
+
+            <!-- Color Page Content -->
+            <div class="page-content active" id="color-page">
+
+                            <div class="tab-content active" id="overview-content">
+                    <section class="content-section">
+                        <div class="main-content">
+                            <div class="hero-image" style="width: 100%; height: 300px; margin-bottom: 20px;">
+                                <img src="./assets/Color hero.webp" alt="Color system hero image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                            </div>
+                            
+                            <div class="content-block" id="color-system">
+                            <div class="section-title" style="font-size: 32px; line-height: 34px;">
+                                <p>Overview</p>
+                            </div>
+                            <div class="section-text">
+                                <p style="font-size: 18px; line-height: 150%;">Color directs attention, communicates meaning, and creates a consistent, expressive experience.</p>
+                                <p>&nbsp;</p>
+                                <ul class="bullet-list">
+                                    <li>
+                                        <span class="bold-text">UCP</span> → The base colors (Universal Color Palette) used across all CBS Digital brands.
+                                    </li>
+                                    <li>
+                                        <span class="bold-text">Patterns</span> → Role-based colors that bring consistency to design elements.
+                                    </li>
+                                    <li>
+                                        <span class="bold-text">Themes</span> → Light, dark, and dynamic surfaces that adapt to context
+                                    </li>
+                                    <li>
+                                        <span class="bold-text">Accessibility</span> → All patterns are tested to meet AA contrast ratios, with exceptions clearly noted.
+                                    </li>
+                                    <li>
+                                        <span class="bold-text">External colors</span> → Third-party brand colors and OS-specific colors are included
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="content-block" id="accessibility">
+                            <div class="section-title">
+                                <p>Accessibility & Contrast Ratios</p>
+                            </div>
+                            <div class="section-text">
+                                <p style="font-size: 18px; line-height: 150%;">We prioritize AA compliance across all patterns. When contrast can't be guaranteed (e.g., dynamic themes), alternate solutions are provided in documentation.</p>
+                            </div>
+                                                                <a class="link-item" href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer" aria-label="Open WCAG Accessibility Guidelines in a new tab">
+                                    <div class="link-text">🔗 WCAG Accessibility Guidelines ↗</div>
+                                </a>
+                        </div>
+
+                        <div class="content-block" id="resources">
+                            <div class="section-title">
+                                <p>Resources</p>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/TPtUpOZ4jFrQliCnjO1ZJg/1.1-Universal-Color-Palette?m=auto&t=ctVY8nIvPuEUZioq-1" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1 Universal Color Palette ↗</a></div>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/gSXySMHDh8cB4ggA4JVhXo/1.1.1-Colors---Sports---App?m=auto" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1.1 Colors - Sports / App ↗</a></div>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/GxBykCwSjIJxpRdIJx6ED5/1.1.2-Third-Party-Colors?m=auto" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1.2 Third Party Colors ↗</a></div>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/ifU1IRhTcGHdV6dffJN0A5/1.1.4-iOS---iPadOS-Design-Resource?node-id=1-338" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1.4 iOS & iPadOS Design Resource ↗</a></div>
+                            </div>
+                            <div class="link-item">
+                                <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/qAjThJoQft0nhKmHGp8Kbc/1.1.4-Material-3-Design-Resource?node-id=51424-3355" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1.4 Material 3 Design Resource ↗</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="side-navigation">
+                        <div class="nav-container">
+                            <div class="nav-item">
+                                <div class="nav-text">ON THIS PAGE</div>
+                            </div>
+                            <div class="nav-item active" data-target="color-system">
+                                <div class="nav-text active">Overview</div>
+                            </div>
+                            <div class="nav-item" data-target="accessibility">
+                                <div class="nav-text">Accessibility</div>
+                            </div>
+                            <div class="nav-item" data-target="resources">
+                                <div class="nav-text">Resources</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="tab-content" id="ucp-content">
+                <section class="content-section">
+                    <div class="main-content">
+                        <div class="content-block" id="ucp-section">
+                            <div class="section-title" style="font-size: 32px; line-height: 34px;">
+                                <p>Universal Color Palette (UCP)</p>
+                            </div>
+                            <div class="section-text">
+                                <p style="font-size: 18px; line-height: 150%;">The Universal Color Palette (UCP) is the base colors used across all CBS Digital brands.</p>
+                                <p>&nbsp;</p>
+                                <p style="font-size: 18px; line-height: 150%;">It forms the foundation for Themes and <span style="text-decoration: underline;">Color Patterns</span>, comprised of scaled color families.</p>
+                            </div>
+                            <div class="link-item">
+                                                            <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/TPtUpOZ4jFrQliCnjO1ZJg/1.1-Universal-Color-Palette?m=auto&t=ctVY8nIvPuEUZioq-1" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1 Universal Color Palette ↗</a></div>
+                            </div>
+                        </div>
+                            <div class="ucp-grid" aria-label="Universal Color Palette">
+                                <div class="ucp-row">
+                                    <div class="ucp-label">Neutral</div>
+                                    <div class="ucp-swatches">
+                                        <div class="swatch" style="background-color:#f2f2f2" data-tooltip="Neutral 0, #F2F2F2"></div>
+                                        <div class="swatch" style="background-color:#e8e8e8" data-tooltip="Neutral 5, #E8E8E8"></div>
+                                        <div class="swatch" style="background-color:#dcdcdc" data-tooltip="Neutral 10, #DCDCDC"></div>
+                                        <div class="swatch" style="background-color:#c8c8c8" data-tooltip="Neutral 20, #C8C8C8"></div>
+                                        <div class="swatch" style="background-color:#ababab" data-tooltip="Neutral 30, #ABABAB"></div>
+                                        <div class="swatch" style="background-color:#8f8f8f" data-tooltip="Neutral 40, #8F8F8F"></div>
+                                        <div class="swatch" style="background-color:#767676" data-tooltip="Neutral 50, #767676"></div>
+                                        <div class="swatch" style="background-color:#5f5f5f" data-tooltip="Neutral 60, #5F5F5F"></div>
+                                        <div class="swatch" style="background-color:#484848" data-tooltip="Neutral 70, #484848"></div>
+                                        <div class="swatch" style="background-color:#333333" data-tooltip="Neutral 80, #333333"></div>
+                                        <div class="swatch" style="background-color:#212121" data-tooltip="Neutral 90, #212121"></div>
+                                        <div class="swatch" style="background-color:#181818" data-tooltip="Neutral 95, #181818"></div>
+                                        <div class="swatch" style="background-color:#101010" data-tooltip="Neutral 100, #101010"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ucp-row">
+                                    <div class="ucp-label">Blue</div>
+                                    <div class="ucp-swatches">
+                                        <div class="swatch" style="background-color:#f5f8ff" data-tooltip="Blue 0, #F5F8FF"></div>
+                                        <div class="swatch" style="background-color:#dfe6f5" data-tooltip="Blue 5, #DFE6F5"></div>
+                                        <div class="swatch" style="background-color:#bdd0f2" data-tooltip="Blue 10, #BDD0F2"></div>
+                                        <div class="swatch" style="background-color:#88b0f7" data-tooltip="Blue 20, #88B0F7"></div>
+                                        <div class="swatch" style="background-color:#4383fa" data-tooltip="Blue 30, #4383FA"></div>
+                                        <div class="swatch" style="background-color:#2268e5" data-tooltip="Blue 40, #2268E5"></div>
+                                        <div class="swatch" style="background-color:#0d55d9" data-tooltip="Blue 50, #0D55D9"></div>
+                                        <div class="swatch" style="background-color:#004ace" data-tooltip="Blue 60, #004ACE"></div>
+                                        <div class="swatch" style="background-color:#0036b5" data-tooltip="Blue 70, #0036B5"></div>
+                                        <div class="swatch" style="background-color:#00259e" data-tooltip="Blue 80, #00259E"></div>
+                                        <div class="swatch" style="background-color:#001373" data-tooltip="Blue 90, #001373"></div>
+                                        <div class="swatch" style="background-color:#000640" data-tooltip="Blue 95, #000640"></div>
+                                        <div class="swatch" style="background-color:#050d27" data-tooltip="Blue 100, #050D27"></div>
+                                    </div>
+                                </div>
+                                <div class="ucp-row">
+                                    <div class="ucp-label">Green</div>
+                                    <div class="ucp-swatches">
+                                        <div class="swatch" style="background-color:#f7fff9" data-tooltip="Green 0, #F7FFF9"></div>
+                                        <div class="swatch" style="background-color:#dcf2e0" data-tooltip="Green 5, #DCF2E0"></div>
+                                        <div class="swatch" style="background-color:#c3facc" data-tooltip="Green 10, #C3FACC"></div>
+                                        <div class="swatch" style="background-color:#8df7a0" data-tooltip="Green 20, #8DF7A0"></div>
+                                        <div class="swatch" style="background-color:#58ed78" data-tooltip="Green 30, #58ED78"></div>
+                                        <div class="swatch" style="background-color:#10d669" data-tooltip="Green 40, #10D669"></div>
+                                        <div class="swatch" style="background-color:#0dc45f" data-tooltip="Green 50, #0DC45F"></div>
+                                        <div class="swatch" style="background-color:#09b054" data-tooltip="Green 60, #09B054"></div>
+                                        <div class="swatch" style="background-color:#059646" data-tooltip="Green 70, #059646"></div>
+                                        <div class="swatch" style="background-color:#04802d" data-tooltip="Green 80, #04802D"></div>
+                                        <div class="swatch" style="background-color:#005922" data-tooltip="Green 90, #005922"></div>
+                                        <div class="swatch" style="background-color:#004017" data-tooltip="Green 95, #004017"></div>
+                                        <div class="swatch" style="background-color:#00260b" data-tooltip="Green 100, #00260B"></div>
+                                    </div>
+                                </div>
+                                <div class="ucp-row">
+                                    <div class="ucp-label">Red</div>
+                                    <div class="ucp-swatches">
+                                        <div class="swatch" style="background-color:#fff7f7" data-tooltip="Red 0, #FFF7F7"></div>
+                                        <div class="swatch" style="background-color:#f2dfdf" data-tooltip="Red 5, #F2DFDF"></div>
+                                        <div class="swatch" style="background-color:#fac3c3" data-tooltip="Red 10, #FAC3C3"></div>
+                                        <div class="swatch" style="background-color:#f78d8d" data-tooltip="Red 20, #F78D8D"></div>
+                                        <div class="swatch" style="background-color:#f94343" data-tooltip="Red 30, #F94343"></div>
+                                        <div class="swatch" style="background-color:#eb2a2a" data-tooltip="Red 40, #EB2A2A"></div>
+                                        <div class="swatch" style="background-color:#e10500" data-tooltip="Red 50, #E10500"></div>
+                                        <div class="swatch" style="background-color:#cc0e00" data-tooltip="Red 60, #CC0E00"></div>
+                                        <div class="swatch" style="background-color:#ad1100" data-tooltip="Red 70, #AD1100"></div>
+                                        <div class="swatch" style="background-color:#941100" data-tooltip="Red 80, #941100"></div>
+                                        <div class="swatch" style="background-color:#730b00" data-tooltip="Red 90, #730B00"></div>
+                                        <div class="swatch" style="background-color:#400c06" data-tooltip="Red 95, #400C06"></div>
+                                        <div class="swatch" style="background-color:#2b0604" data-tooltip="Red 100, #2B0604"></div>
+                                    </div>
+                                </div>
+                                <div class="ucp-row">
+                                    <div class="ucp-label">Orange</div>
+                                    <div class="ucp-swatches">
+                                        <div class="swatch" style="background-color:#fff9f5" data-tooltip="Orange 0, #FFF9F5"></div>
+                                        <div class="swatch" style="background-color:#f2e8df" data-tooltip="Orange 5, #F2E8DF"></div>
+                                        <div class="swatch" style="background-color:#fad3c3" data-tooltip="Orange 10, #FAD3C3"></div>
+                                        <div class="swatch" style="background-color:#f7b08d" data-tooltip="Orange 20, #F7B08D"></div>
+                                        <div class="swatch" style="background-color:#f79443" data-tooltip="Orange 30, #F79443"></div>
+                                        <div class="swatch" style="background-color:#e57a2a" data-tooltip="Orange 40, #E57A2A"></div>
+                                        <div class="swatch" style="background-color:#d96500" data-tooltip="Orange 50, #D96500"></div>
+                                        <div class="swatch" style="background-color:#cc5500" data-tooltip="Orange 60, #CC5500"></div>
+                                        <div class="swatch" style="background-color:#b54a00" data-tooltip="Orange 70, #B54A00"></div>
+                                        <div class="swatch" style="background-color:#9e3e00" data-tooltip="Orange 80, #9E3E00"></div>
+                                        <div class="swatch" style="background-color:#732e00" data-tooltip="Orange 90, #732E00"></div>
+                                        <div class="swatch" style="background-color:#4a1e00" data-tooltip="Orange 95, #4A1E00"></div>
+                                        <div class="swatch" style="background-color:#2b1200" data-tooltip="Orange 100, #2B1200"></div>
+                                    </div>
+                                </div>
+                                <div class="ucp-row">
+                                    <div class="ucp-label">Yellow</div>
+                                    <div class="ucp-swatches">
+                                        <div class="swatch" style="background-color:#fcfbf5" data-tooltip="Yellow 0, #FCFBF5"></div>
+                                        <div class="swatch" style="background-color:#faf7eb" data-tooltip="Yellow 5, #FAF7EB"></div>
+                                        <div class="swatch" style="background-color:#f2e7bd" data-tooltip="Yellow 10, #F2E7BD"></div>
+                                        <div class="swatch" style="background-color:#f2dd8a" data-tooltip="Yellow 20, #F2DD8A"></div>
+                                        <div class="swatch" style="background-color:#f2ce3f" data-tooltip="Yellow 30, #F2CE3F"></div>
+                                        <div class="swatch" style="background-color:#f2be2c" data-tooltip="Yellow 40, #F2BE2C"></div>
+                                        <div class="swatch" style="background-color:#ebaa17" data-tooltip="Yellow 50, #EBAA17"></div>
+                                        <div class="swatch" style="background-color:#cc9618" data-tooltip="Yellow 60, #CC9618"></div>
+                                        <div class="swatch" style="background-color:#996c05" data-tooltip="Yellow 70, #996C05"></div>
+                                        <div class="swatch" style="background-color:#805804" data-tooltip="Yellow 80, #805804"></div>
+                                        <div class="swatch" style="background-color:#593c00" data-tooltip="Yellow 90, #593C00"></div>
+                                        <div class="swatch" style="background-color:#402a00" data-tooltip="Yellow 95, #402A00"></div>
+                                        <div class="swatch" style="background-color:#2b1c00" data-tooltip="Yellow 100, #2B1C00"></div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="side-navigation">
+                        <div class="nav-container">
+                            <div class="nav-item">
+                                <div class="nav-text">ON THIS PAGE</div>
+                            </div>
+                            <div class="nav-item" data-target="ucp-section">
+                                <div class="nav-text">UCP</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="tab-content" id="patterns-content">
+                <section class="content-section">
+                    <div class="main-content">
+                        <div class="content-block" id="color-patterns">
+                            <div class="section-title" style="font-size: 32px; line-height: 34px;">
+                                <p>Color patterns</p>
+                            </div>
+                            <div class="section-text" style="font-size: 18px; line-height: 150%;">
+                                <p>Patterns are role-based colors that bring consistency and clarity to design elements. They're purpose-driven, unified across products, and share the same names in Figma to code.</p>
+                            </div>
+                            <div class="section-text" style="font-size: 18px; line-height: 150%;">
+                                <p>Patterns are divided into the following categories: <a onclick="document.getElementById('text-section').scrollIntoView({behavior: 'smooth', block: 'start'})" style="text-decoration: underline; color: #181818; cursor: pointer;">Text</a>, <a onclick="document.getElementById('surface-section').scrollIntoView({behavior: 'smooth', block: 'start'})" style="text-decoration: underline; color: #181818; cursor: pointer;">Surface</a>, and <a onclick="document.getElementById('surface-section-duplicate').scrollIntoView({behavior: 'smooth', block: 'start'})" style="text-decoration: underline; color: #181818; cursor: pointer;">Utility</a>.</p>
+                            </div>
+                            
+                            <div class="link-item">
+                                <div class="link-icon"></div>
+                                <div class="link-text"><a href="https://www.figma.com/design/gSXySMHDh8cB4ggA4JVhXo/1.1.1-Colors---Sports---App?m=auto" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">1.1.1 Colors - Sports / App ↗</a></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Text Section from Figma -->
+                        <div class="content-block" id="text-section">
+                            <div class="section-title">
+                                <p>Text</p>
+                            </div>
+                            <div class="section-text" style="font-size: 18px; line-height: 150%;">
+                                <p>Text colors ensure readability, accessibility, and clear hierarchy.</p>
+                            </div>
+                            
+                            <!-- Theme Tabs and Table Container -->
+                            <div class="theme-table-container" style="margin-top: -12px;">
+                                <!-- Theme Tabs positioned above table -->
+                                <div class="theme-tabs" style="margin: 0; padding: 16px 16px 0 16px;">
+                                    <div class="theme-tab active">Light</div>
+                                    <div class="theme-tab disabled" style="opacity: 0.4; cursor: not-allowed; color: #999;">Dark</div>
+                                    <div class="theme-tab disabled" style="opacity: 0.4; cursor: not-allowed; color: #999;">Dynamic</div>
+                                </div>
+                                
+                                <!-- Text Patterns Table -->
+                                <img src="./assets/Light theme table.svg" alt="Light theme text patterns table" style="width: 100%; height: auto; margin-top: 0px;">
+                                
+                                <!-- Dynamic Theme Usage Examples -->
+                                <div class="content-block" style="margin-top: 40px;">
+                                    <div class="example-container" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 24px;">
+                                        <div class="section-text" style="flex: 1; font-size: 18px; line-height: 150%; margin: 0;">
+                                            <p style="margin-bottom: 16px;">Match text theme to background.</p>
+                                            <ul style="margin: 0; padding-left: 0; list-style: none;">
+                                                <li style="margin-bottom: 12px; font-size: 16px; line-height: 20px;">• Light backgrounds → Light text</li>
+                                                <li style="margin-bottom: 12px; font-size: 16px; line-height: 20px;">• Dark backgrounds → Dark text</li>
+                                                <li style="font-size: 16px; line-height: 20px;">• Adaptive surfaces → Dynamic theme</li>
+                                            </ul>
+                                        </div>
+                                        <div class="example-card" style="flex: 1.5;">
+                                            <div class="card-header" style="background: #f5f8ff; padding: 0; border-radius: 20px 20px 0 0; position: relative;">
+                                                <img src="./assets/Dynamic theme text.svg" alt="Dynamic theme text example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                            <div class="card-footer" style="background: #58ed78; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-radius: 0 0 20px 20px;">
+                                                <div class="check-icon" style="width: 24px; height: 24px; background: #000000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #58ed78;">✓</div>
+                                                <div style="font-size: 18px; font-weight: bold;">Do</div>
+                                            </div>
+                                            <div style="padding: 16px 0; text-align: left; font-size: 16px; line-height: 20px; color: #181818;">
+                                                <p>Ensure dynamic surfaces are dark, if we can control it.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Duplicated Text Section Content -->
+                        <div class="content-block" id="surface-section" style="margin-top: 24px;">
+                            <!-- Surface Section -->
+                            <div class="section-title">
+                                <p>Surface</p>
+                            </div>
+                            <div class="section-text" style="font-size: 18px; line-height: 150%;">
+                                <p>Surface colors are the canvas of our products from its base backgrounds to overlays.</p>
+                            </div>
+                            
+                            <!-- Theme Tabs and Table Container -->
+                            <div class="theme-table-container" style="margin-top: -12px;">
+                                <!-- Theme Tabs positioned above table -->
+                                <div class="theme-tabs" style="margin: 0; padding: 16px 16px 0 16px;">
+                                    <div class="theme-tab active">Light</div>
+                                    <div class="theme-tab disabled" style="opacity: 0.4; cursor: not-allowed; color: #999;">Dark</div>
+                                    <div class="theme-tab disabled" style="opacity: 0.4; cursor: not-allowed; color: #999;">Dynamic</div>
+                                </div>
+                                
+                                <!-- Surface Patterns Table -->
+                                <img src="./assets/Surface table.svg" alt="Surface patterns table" style="width: 100%; height: auto; margin-top: 0px;">
+                                
+                                <!-- Dynamic Theme Usage Examples -->
+                                <div class="content-block" style="margin-top: 40px;">
+                                    <div class="example-container" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 24px;">
+                                        <div class="section-text" style="flex: 1; font-size: 18px; line-height: 150%; margin: 0;">
+                                            <p style="margin-bottom: 16px;">Surface colors provide the foundation for content.</p>
+                                            <ul style="margin: 0; padding-left: 0; list-style: none;">
+                                                <li style="margin-bottom: 12px; font-size: 16px; line-height: 20px;">• Base backgrounds</li>
+                                                <li style="margin-bottom: 12px; font-size: 16px; line-height: 20px;">• Overlays and modals</li>
+                                                <li style="font-size: 16px; line-height: 20px;">• Cards and containers</li>
+                                            </ul>
+                                        </div>
+                                        <div class="example-card" style="flex: 1.5;">
+                                            <div class="card-header" style="background: #f5f8ff; padding: 0; border-radius: 20px 20px 0 0; position: relative;">
+                                                <img src="./assets/Surface caution.svg" alt="Surface caution example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                            <div class="card-footer" style="background: #F2CE3F; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-radius: 0 0 20px 20px;">
+                                                <div class="check-icon" style="width: 24px; height: 24px; background: #000000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #F2CE3F;">!</div>
+                                                <div style="font-size: 18px; font-weight: bold;">Caution</div>
+                                            </div>
+                                            <div style="padding: 16px 0; text-align: left; font-size: 16px; line-height: 20px; color: #181818;">
+                                                <p>For light theme, avoid tertiary text on surface secondary due to low contrast.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Duplicated Surface Section -->
+                        <div class="content-block" id="surface-section-duplicate" style="margin-top: 24px;">
+                            <!-- Utility Section -->
+                            <div class="section-title">
+                                <p>Utility</p>
+                            </div>
+                            <div class="section-text" style="font-size: 18px; line-height: 150%;">
+                                <p>Utility colors are used for UI elements like tabs and borders, as well as for UI states like active and disabled.</p>
+                            </div>
+                            
+                            <!-- Theme Tabs and Table Container -->
+                            <div class="theme-table-container" style="margin-top: -12px;">
+                                <!-- Theme Tabs positioned above table -->
+                                <div class="theme-tabs" style="margin: 0; padding: 16px 16px 0 16px;">
+                                    <div class="theme-tab active">Light</div>
+                                    <div class="theme-tab disabled" style="opacity: 0.4; cursor: not-allowed; color: #999;">Dark</div>
+                                    <div class="theme-tab disabled" style="opacity: 0.4; cursor: not-allowed; color: #999;">Dynamic</div>
+                                </div>
+                                
+                                <!-- Utility Patterns Table -->
+                                <img src="./assets/Utility table.svg" alt="Utility patterns table" style="width: 100%; height: auto; margin-top: 0px;">
+                                
+                                <!-- Dynamic Theme Usage Examples -->
+                                <div class="content-block" style="margin-top: 40px;">
+                                    <div class="example-container" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 24px;">
+                                        <div class="section-text" style="flex: 1; font-size: 18px; line-height: 150%; margin: 0;">
+                                            <p style="margin-bottom: 16px;">Utility colors support UI functionality.</p>
+                                            <ul style="margin: 0; padding-left: 0; list-style: none;">
+                                                <li style="margin-bottom: 12px; font-size: 16px; line-height: 20px;">• Tabs and borders</li>
+                                                <li style="margin-bottom: 12px; font-size: 16px; line-height: 20px;">• Active and disabled states</li>
+                                                <li style="font-size: 16px; line-height: 20px;">• Status indicators</li>
+                                            </ul>
+                                        </div>
+                                        <div class="example-card" style="flex: 1.5;">
+                                            <div class="card-header" style="background: #f5f8ff; padding: 0; border-radius: 20px 20px 0 0; position: relative;">
+                                                <img src="./assets/Utility caution.svg" alt="Utility caution example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                            <div class="card-footer" style="background: #F2CE3F; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-radius: 0 0 20px 20px;">
+                                                <div class="check-icon" style="width: 24px; height: 24px; background: #000000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #F2CE3F;">!</div>
+                                                <div style="font-size: 18px; font-weight: bold;">Caution</div>
+                                            </div>
+                                            <div style="padding: 16px 0; text-align: left; font-size: 16px; line-height: 20px; color: #181818;">
+                                                <p>Use utility-status-info sparingly as it does not meet accessibility in light theme.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                            </div>
+                                
+
+                            </div>
+                            
+                            <!-- Back to Top Button -->
+                        <div class="back-to-top-container" style="text-align: center; margin: 24px 0 40px 0;">
+                            <button class="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background: #181818; color: white; border: none; padding: 16px 32px; border-radius: 50px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease;">
+                                Back to Top ↑
+                            </button>
+                        </div>
+                        
+                        <!-- Text Section -->
+
+
+
+
+
+                    </div>
+
+                    <div class="side-navigation">
+                        <div class="nav-container">
+                            <div class="nav-item">
+                                <div class="nav-text">ON THIS PAGE</div>
+                            </div>
+                            <div class="nav-item" data-target="color-patterns">
+                                <div class="nav-text">Color patterns</div>
+                            </div>
+                            <div class="nav-item active" data-target="text-section">
+                                <div class="nav-text active">Text</div>
+                            </div>
+                            <div class="nav-item" data-target="surface-section">
+                                <div class="nav-text">Surface</div>
+                            </div>
+                            <div class="nav-item" data-target="surface-section-duplicate">
+                                <div class="nav-text">Utility</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                </div>
+            </div>
+
+            <!-- Color 2 Page Content -->
+            <div class="page-content" id="color-page-2">
+                <div class="tab-content active" id="color-2-overview-content">
+                    <section class="content-section">
+                        <div class="main-content">
+                            <div class="hero-image" style="width: 100%; height: 300px; margin-bottom: 20px;">
+                                <img src="./assets/button hero.svg" alt="Button system hero image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                            </div>
+                            
+                            <div class="content-block" id="color-2-system">
+                                <div class="section-title" style="font-size: 32px; line-height: 34px;">
+                                    <p>Overview</p>
+                                </div>
+                                <div class="section-text">
+                                    <p style="font-size: 18px; line-height: 150%;">Buttons prompt the user to perform an action.</p>
+                                </div>
+                            </div>
+
+                            <div class="content-block" id="color-2-accessibility">
+                                <div class="section-title">
+                                    <p>Accessibility</p>
+                                </div>
+                                <div class="section-text">
+                                    <p style="font-size: 18px; line-height: 150%;">We are using the <a href="https://developer.apple.com/design/human-interface-guidelines/foundations/layout/" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">Human Interface Guidelines ↗</a> from Apple as the basis of minimum target height size. It is noted that Material's guidelines are more stringent at 48.</p>
+                                </div>
+                                
+                                <div class="caution-tooltip" style="margin-top: 16px; background: #FFF6F1; padding: 24px; border-radius: 12px; display: flex; align-items: center; gap: 12px; width: 100%;">
+                                    <div class="caution-icon" style="width: 20px; height: 20px; background: #BA4E01; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #FFF6F1; font-weight: bold;">!</div>
+                                    <div class="caution-text" style="color: #BA4E01; font-size: 16px; line-height: 20px; font-weight: 500;">
+                                        Buttons must maintain a minimum tappable area of 44 x 44.
+                                    </div>
+                                </div>
+                                
+                                <a class="link-item" href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer" aria-label="Open WCAG Accessibility Guidelines in a new tab" style="margin-top: 16px;">
+                                    <div class="link-text">🔗 WCAG Accessibility Guidelines ↗</div>
+                                </a>
+                            </div>
+
+
+
+                            <div class="content-block" id="color-2-resources">
+                                <div class="section-title">
+                                    <p>Resources</p>
+                                </div>
+                                <div class="link-item">
+                                    <div class="link-icon"></div>
+                                    <div class="link-text"><a href="https://www.figma.com/design/xCt7Rj56PUK28An6I9eAjh/2.1-Components---Sports---App?node-id=3921-180031" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">2.1 Components / Sports / App ↗</a></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="side-navigation">
+                            <div class="nav-container">
+                                <div class="nav-item">
+                                    <div class="nav-text">ON THIS PAGE</div>
+                                </div>
+                                <div class="nav-item active" data-target="color-2-system">
+                                    <div class="nav-text active">Overview</div>
+                                </div>
+                                <div class="nav-item" data-target="color-2-accessibility">
+                                    <div class="nav-text">Accessibility</div>
+                                </div>
+                                <div class="nav-item" data-target="color-2-resources">
+                                    <div class="nav-text">Resources</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+
+                <div class="tab-content" id="color-2-patterns-content">
+                    <section class="content-section">
+                        <div class="main-content">
+                            <div class="content-block" id="color-2-patterns">
+                                <div class="section-title" style="font-size: 32px; line-height: 34px;">
+                                    <p>Prime button</p>
+                                </div>
+                                <div class="section-text" style="font-size: 18px; line-height: 22px;">
+                                    <p>Each page should have one primary button, with other actions shown as secondary or tertiary buttons.</p>
+                                    <p>&nbsp;</p>
+                                    <p>Reserve buttons for actions, not page navigation. Use Text Links when the intended action is to take the user to a new page.</p>
+                                </div>
+                                
+                                <div class="link-item" style="margin-top: 8px;">
+                                    <div class="link-icon"></div>
+                                    <div class="link-text"><a href="https://www.figma.com/design/xCt7Rj56PUK28An6I9eAjh/2.1-Components---Sports---App?node-id=21872-24865&t=sD5mwba7dDrnIXvR-4" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">Prime Button ↗</a></div>
+                                </div>
+
+                            </div>
+                            
+                            <!-- Types Section -->
+                            <div class="content-block" id="color-2-text-section">
+                                <div class="section-title">
+                                    <p>Types</p>
+                                </div>
+                                <div class="hero-image" style="width: 100%; height: 50.8%; margin-bottom: 20px;">
+                                    <img src="./assets/Types display.svg" alt="Types display" style="width: 100%; height: 100%; border-radius: 12px;">
+                                </div>
+                                <div class="section-text" style="font-size: 18px; line-height: 22px;">
+                                    <p>There are 3 Prime Button styles, in order of emphasis:</p>
+                                    <p>&nbsp;</p>
+                                    <p><span style="display: inline-block; width: 28px; height: 28px; background: #000000; border-radius: 50%; color: #ffffff; text-align: center; line-height: 28px; font-size: 16px; font-weight: bold; margin-right: 8px;">1</span>Primary</p>
+                                    <p>&nbsp;</p>
+                                    <p><span style="display: inline-block; width: 28px; height: 28px; background: #000000; border-radius: 50%; color: #ffffff; text-align: center; line-height: 28px; font-size: 16px; font-weight: bold; margin-right: 8px;">2</span>Secondary</p>
+                                    <p>&nbsp;</p>
+                                    <p><span style="display: inline-block; width: 28px; height: 28px; background: #000000; border-radius: 50%; color: #ffffff; text-align: center; line-height: 28px; font-size: 16px; font-weight: bold; margin-right: 8px;">3</span>Tertiary</p>
+                                    <p>&nbsp;</p>
+                                    <p>Buttons have styles and states:</p>
+                                    <p>&nbsp;</p>
+                                    <p>A. Large</p>
+                                    <p>&nbsp;</p>
+                                    <p>B. Medium</p>
+                                    <p>&nbsp;</p>
+                                    <p>C. Small</p>
+                                    <p>&nbsp;</p>
+                                    <p>D. Loading</p>
+                                    <p>&nbsp;</p>
+                                    <p>E. Disabled</p>
+                                </div>
+                                
+                                <!-- Dynamic Theme Usage Examples -->
+                                <div class="content-block" style="margin-top: 40px;">
+                                    <div class="example-container" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 24px;">
+                                        <div class="section-text" style="flex: 1; font-size: 18px; line-height: 22px; margin: 0;">
+                                            <p style="margin-bottom: 16px; font-size: 20px; font-weight: bold; line-height: 24px;">Primary buttons</p>
+                                            <p style="margin-bottom: 16px; font-size: 18px; line-height: 150%;">Use Primary buttons for actions that are a top priority in the context of the whole page.</p>
+                                            <p style="margin-bottom: 0; font-size: 18px; line-height: 150%;">Consider using Primary buttons sparingly, as over saturating the page with it will reduce its effectiveness.</p>
+                                        </div>
+                                        <div class="example-card" style="flex: 1.5;">
+                                            <div class="card-header" style="background: #F2F2F2; padding: 0; border-radius: 20px; position: relative;">
+                                                <img src="./assets/Prime button.svg" alt="Prime button example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Duplicate Primary Button Section -->
+                                <div class="content-block" style="margin-top: 40px;">
+                                    <div class="example-container" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 24px;">
+                                        <div class="section-text" style="flex: 1; font-size: 18px; line-height: 22px; margin: 0;">
+                                            <p style="margin-bottom: 16px; font-size: 20px; font-weight: bold; line-height: 24px;">Secondary buttons</p>
+                                            <p style="margin-bottom: 16px; font-size: 18px; line-height: 150%;">Consider using a Secondary button for most scenarios if the action is not a top priority.</p>
+                                        </div>
+                                        <div class="example-card" style="flex: 1.5;">
+                                            <div class="card-header" style="background: #F2F2F2; padding: 0; border-radius: 20px; position: relative;">
+                                                <img src="./assets/secondary button.svg" alt="Secondary button example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Duplicate Secondary Button Section for Tertiary -->
+                                <div class="content-block" style="margin-top: 40px;">
+                                    <div class="example-container" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 24px;">
+                                        <div class="section-text" style="flex: 1; font-size: 18px; line-height: 22px; margin: 0;">
+                                            <p style="margin-bottom: 16px; font-size: 20px; font-weight: bold; line-height: 24px;">Tertiary buttons</p>
+                                            <p style="margin-bottom: 16px; font-size: 18px; line-height: 150%;">If the action is not a top priority and a Secondary button cannot be used, the Tertiary button is the way to go.</p>
+                                        </div>
+                                        <div class="example-card" style="flex: 1.5;">
+                                            <div class="card-header" style="background: #F2F2F2; padding: 0; border-radius: 20px; position: relative;">
+                                                <img src="./assets/Tertiary button.svg" alt="Tertiary button example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            
+                            <!-- Best Practices Section -->
+                            <div class="content-block" id="color-2-utility-section" style="margin-top: 24px;">
+                                <div class="section-title">
+                                    <p>Best practices</p>
+                                </div>
+                                
+                                <!-- Example Card Section -->
+                                <div class="content-block" style="margin-top: 8px;">
+                                    <div class="example-container" style="display: flex; gap: 24px;">
+                                        <div class="example-card" style="width: 50%;">
+                                            <div class="card-header" style="background: #f5f8ff; padding: 0; border-radius: 20px 20px 0 0; position: relative;">
+                                                <img src="./assets/Don't 1.svg" alt="Don't 1 example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                            <div class="card-footer" style="background: #FF4444; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-radius: 0 0 20px 20px;">
+                                                <div class="check-icon" style="width: 24px; height: 24px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #FF4444;">✕</div>
+                                                <div style="font-size: 18px; font-weight: bold; color: white;">Don't</div>
+                                            </div>
+                                            <div style="padding: 16px 0; text-align: left; font-size: 16px; line-height: 20px; color: #181818;">
+                                                <p>Don't make small-sized buttons go full width.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="example-card" style="width: 50%;">
+                                            <div class="card-header" style="background: #f5f8ff; padding: 0; border-radius: 20px 20px 0 0; position: relative;">
+                                                <img src="./assets/Don't 2.svg" alt="Don't 2 example" style="width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 12px 12px 0 0;">
+                                            </div>
+                                            <div class="card-footer" style="background: #FF4444; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-radius: 0 0 20px 20px;">
+                                                <div class="check-icon" style="width: 24px; height: 24px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #FF4444;">✕</div>
+                                                <div style="font-size: 18px; font-weight: bold; color: white;">Don't</div>
+                                            </div>
+                                            <div style="padding: 16px 0; text-align: left; font-size: 16px; line-height: 20px; color: #181818;">
+                                                <p>Don't change colors, spacing, typography or icons outside of the parameters provided.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <!-- Back to Top Button -->
+                            <div class="back-to-top-container" style="text-align: center; margin: 24px 0 40px 0;">
+                                <button class="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background: #181818; color: white; border: none; padding: 16px 32px; border-radius: 50px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease;">
+                                    Back to Top ↑
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="side-navigation">
+                            <div class="nav-container">
+                                <div class="nav-item">
+                                    <div class="nav-text">ON THIS PAGE</div>
+                                </div>
+                                <div class="nav-item" data-target="color-2-text-section">
+                                    <div class="nav-text">Types</div>
+                                </div>
+                                <div class="nav-item" data-target="color-2-utility-section">
+                                    <div class="nav-text">Best practices</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        (function(){
+            const ASSET_HOST = 'http://localhost:3845';
+            const LOAD_TIMEOUT_MS = 1500;
+
+            function demoteLocalhostAssets() {
+                // Move any immediate localhost src/srcset to data- attributes so they don't block load
+                document.querySelectorAll('img[src^="' + ASSET_HOST + '"]').forEach(img => {
+                    if (!img.dataset.src) {
+                        img.dataset.src = img.getAttribute('src');
+                        img.removeAttribute('src');
+                    }
+                    if (img.srcset && !img.dataset.srcset) {
+                        img.dataset.srcset = img.getAttribute('srcset');
+                        img.removeAttribute('srcset');
+                    }
+                    img.loading = 'lazy';
+                    img.decoding = 'async';
+                    img.fetchPriority = 'low';
+                });
+                // Ensure any pre-marked data-src images are non-blocking as well
+                document.querySelectorAll('img[data-src^="' + ASSET_HOST + '"]').forEach(img => {
+                    img.loading = 'lazy';
+                    img.decoding = 'async';
+                    img.fetchPriority = 'low';
+                });
+                document.querySelectorAll('[style*="' + ASSET_HOST + '"]').forEach(el => {
+                    const bg = el.style.backgroundImage;
+                    if (bg && bg.includes(ASSET_HOST)) {
+                        el.dataset.bg = bg;
+                        el.style.backgroundImage = '';
+                    }
+                });
+            }
+
+            function restoreLocalhostAssets() {
+                document.querySelectorAll('img[data-src^="' + ASSET_HOST + '"]').forEach(img => {
+                    if (img.dataset.srcset) img.setAttribute('srcset', img.dataset.srcset);
+                    img.setAttribute('src', img.dataset.src);
+                });
+                document.querySelectorAll('[data-bg]').forEach(el => {
+                    el.style.backgroundImage = el.dataset.bg;
+                });
+            }
+
+            function pingAssetsServer(timeoutMs) {
+                return new Promise((resolve) => {
+                    const controller = new AbortController();
+                    const id = setTimeout(() => controller.abort(), timeoutMs);
+                    fetch(ASSET_HOST + '/assets/ping', { method: 'GET', mode: 'no-cors', signal: controller.signal })
+                        .then(() => { clearTimeout(id); resolve(true); })
+                        .catch(() => { clearTimeout(id); resolve(false); });
+                });
+            }
+
+            window.addEventListener('DOMContentLoaded', async () => {
+                demoteLocalhostAssets();
+                const ok = await pingAssetsServer(LOAD_TIMEOUT_MS);
+                if (ok) restoreLocalhostAssets();
+            });
+        })();
+
+        // ---------- Deep links + state persistence for page + tabs ----------
+        (function(){
+            const PAGE_PARAM = 'page';
+            const TAB_PARAM = 'tab';
+
+            function getParam(name){
+                const url = new URL(window.location.href);
+                return url.searchParams.get(name);
+            }
+
+            function setParam(name, value){
+                const url = new URL(window.location.href);
+                if (value) url.searchParams.set(name, value); else url.searchParams.delete(name);
+                history.replaceState(null, '', url.toString());
+            }
+
+            function activatePage(pageId){
+                console.log('Activating page:', pageId);
+                
+                // Clear all page content active states
+                document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+                
+                // Activate the target page
+                const el = document.getElementById(pageId);
+                if (el) {
+                    el.classList.add('active');
+                    console.log('Page activated:', pageId);
+                } else {
+                    console.log('Page not found:', pageId);
+                }
+                
+                // Clear all left nav active states first
+                document.querySelectorAll('.left-side-nav a[data-page]').forEach(a => a.classList.remove('active'));
+                
+                // Activate the corresponding left nav link
+                const navLink = document.querySelector(`.left-side-nav a[data-page="${pageId}"]`);
+                if (navLink) {
+                    navLink.classList.add('active');
+                    console.log('Left nav link activated:', pageId);
+                }
+            }
+
+
+
+            function restoreFromUrlOrStorage(){
+                let page = getParam(PAGE_PARAM) || localStorage.getItem(PAGE_PARAM) || 'color-page';
+                let tab = getParam(TAB_PARAM) || localStorage.getItem(TAB_PARAM) || 'overview';
+                
+                console.log('Restoring state - Page:', page, 'Tab:', tab);
+                console.log('URL params - Page:', getParam(PAGE_PARAM), 'Tab:', getParam(TAB_PARAM));
+                console.log('LocalStorage - Page:', localStorage.getItem(PAGE_PARAM), 'Tab:', localStorage.getItem(TAB_PARAM));
+                
+                // First, ensure the page exists and is valid
+                const pageElement = document.getElementById(page);
+                if (!pageElement) {
+                    console.log('Page not found, falling back to color-page');
+                    page = 'color-page';
+                    pageElement = document.getElementById(page);
+                }
+                
+                activatePage(page);
+                
+                // Clear all navigation active states first
+                document.querySelectorAll('.left-side-nav a').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                document.querySelectorAll('.sub-nav-link').forEach(subNavLink => {
+                    subNavLink.classList.remove('active');
+                });
+                
+                // Also activate the corresponding navigation item
+                const navLink = document.querySelector(`.left-side-nav a[data-page="${page}"]`);
+                if (navLink) {
+                    navLink.classList.add('active');
+                    console.log('Activated left nav link:', page);
+                    
+                    // If it's a dropdown item, expand it and activate the correct sub-nav
+                    const navItem = navLink.closest('.nav-item-with-dropdown');
+                    if (navItem) {
+                        // Expand the dropdown for the active page
+                        navItem.classList.add('expanded');
+                        const toggle = navItem.querySelector('.dropdown-toggle');
+                        if (toggle) toggle.classList.add('expanded');
+                        console.log('Expanded dropdown for:', page);
+                        
+                        // Activate the correct sub-nav item based on stored tab
+                        const targetSubNav = navItem.querySelector(`.sub-nav-link[data-tab="${tab}"]`);
+                        if (targetSubNav) {
+                            targetSubNav.classList.add('active');
+                            console.log('Activated sub-nav:', tab);
+                        } else {
+                            // Fallback to first sub-nav if stored tab doesn't exist
+                            const firstSubNav = navItem.querySelector('.sub-nav-link');
+                            if (firstSubNav) {
+                                firstSubNav.classList.add('active');
+                                console.log('Activated fallback sub-nav:', firstSubNav.getAttribute('data-tab'));
+                                // Update the tab variable to match the fallback
+                                tab = firstSubNav.getAttribute('data-tab');
+                            }
+                        }
+                    }
+                } else {
+                    console.log('Could not find nav link for page:', page);
+                }
+                
+                // Close all other dropdowns that are not active
+                document.querySelectorAll('.nav-item-with-dropdown').forEach(item => {
+                    if (item !== navLink?.closest('.nav-item-with-dropdown')) {
+                        item.classList.remove('expanded');
+                        const toggle = item.querySelector('.dropdown-toggle');
+                        if (toggle) toggle.classList.remove('expanded');
+                    }
+                });
+                
+                // Now handle tab content activation with multiple fallback strategies
+                let targetTabContent = null;
+                
+                console.log('Looking for tab content with tab:', tab, 'and page:', page);
+                
+                // Strategy 1: Try tab + '-content' ID
+                targetTabContent = document.getElementById(tab + '-content');
+                if (targetTabContent) console.log('Strategy 1 success:', tab + '-content');
+                
+                // Strategy 2: Try just the tab ID
+                if (!targetTabContent) {
+                    targetTabContent = document.getElementById(tab);
+                    if (targetTabContent) console.log('Strategy 2 success:', tab);
+                }
+                
+                // Strategy 3: Look for tab content within the page
+                if (!targetTabContent && pageElement) {
+                    targetTabContent = pageElement.querySelector(`#${tab}-content, #${tab}`);
+                    if (targetTabContent) console.log('Strategy 3 success:', targetTabContent.id);
+                }
+                
+                // Strategy 4: Look for tab content by matching the tab name pattern
+                if (!targetTabContent && pageElement) {
+                    const allTabContents = pageElement.querySelectorAll('.tab-content');
+                    for (const tabContent of allTabContents) {
+                        if (tabContent.id.includes(tab) || tabContent.id.includes(tab.replace('-', ''))) {
+                            targetTabContent = tabContent;
+                            console.log('Strategy 4 success (pattern match):', tabContent.id);
+                            break;
+                        }
+                    }
+                }
+                
+                // Strategy 4.5: Specific mapping for Button pages
+                if (!targetTabContent && page === 'color-page-2') {
+                    if (tab === 'color-2-overview') {
+                        targetTabContent = document.getElementById('color-2-overview-content');
+                        if (targetTabContent) console.log('Strategy 4.5 success (Button Overview):', targetTabContent.id);
+                    } else if (tab === 'color-2-patterns') {
+                        targetTabContent = document.getElementById('color-2-patterns-content');
+                        if (targetTabContent) console.log('Strategy 4.5 success (Button Prime):', targetTabContent.id);
+                    }
+                }
+                
+                // Strategy 5: Fallback to first available tab content for this page
+                if (!targetTabContent && pageElement) {
+                    const firstTabContent = pageElement.querySelector('.tab-content');
+                    if (firstTabContent) {
+                        targetTabContent = firstTabContent;
+                        console.log('Strategy 5 success (first tab):', firstTabContent.id);
+                    }
+                }
+                
+                // Strategy 6: Ultimate fallback - find ANY tab content
+                if (!targetTabContent) {
+                    const anyTabContent = document.querySelector('.tab-content');
+                    if (anyTabContent) {
+                        targetTabContent = anyTabContent;
+                        console.log('Strategy 6 success (any tab):', anyTabContent.id);
+                    }
+                }
+                
+                // Finally, activate the found tab content
+                if (targetTabContent) {
+                    // Clear all tab content active states first
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    // Activate the found tab
+                    targetTabContent.classList.add('active');
+                    console.log('Successfully activated tab content:', targetTabContent.id);
+                } else {
+                    console.error('CRITICAL: No tab content found at all!');
+                }
+            }
+
+            // Ensure the page always has content visible, even if state restoration fails
+            window.addEventListener('DOMContentLoaded', () => {
+                // First try to restore from URL/storage
+                restoreFromUrlOrStorage();
+                
+                // Double-check that we have content visible
+                setTimeout(() => {
+                    const activeTabContent = document.querySelector('.tab-content.active');
+                    if (!activeTabContent) {
+                        console.log('No active tab content found after restoration, applying emergency fallback');
+                        // Emergency fallback: activate the first available tab content
+                        const firstTabContent = document.querySelector('.tab-content');
+                        if (firstTabContent) {
+                            firstTabContent.classList.add('active');
+                            console.log('Emergency fallback activated:', firstTabContent.id);
+                        }
+                    }
+                }, 100);
+            });
+
+            // Wire left nav
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('.left-side-nav a[data-page]');
+                if (!link) return;
+                const page = link.getAttribute('data-page');
+                
+                // Preserve the current tab when switching pages
+                const currentTab = getParam(TAB_PARAM) || localStorage.getItem(TAB_PARAM);
+                if (currentTab) {
+                    setParam(TAB_PARAM, currentTab);
+                    localStorage.setItem(TAB_PARAM, currentTab);
+                }
+                
+                setParam(PAGE_PARAM, page);
+                localStorage.setItem(PAGE_PARAM, page);
+            });
+
+
+        })();
+
+        // ---------- Keep sticky offsets tight to the actual header height ----------
+        (function(){
+            function updateHeaderHeight(){
+                const nav = document.querySelector('.navigation-bar');
+                if (!nav) return;
+                const h = nav.offsetHeight;
+                document.documentElement.style.setProperty('--header-height', h + 'px');
+            }
+            window.addEventListener('DOMContentLoaded', updateHeaderHeight);
+            window.addEventListener('resize', updateHeaderHeight);
+        })();
+
+
+        // Intersection Observer for scroll-based navigation highlighting
+        let userHasClickedTab = false;
+        let lastClickedTab = null;
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            // If user has manually clicked a tab, completely ignore all observer updates
+            if (userHasClickedTab) {
+                console.log('Observer blocked - userHasClickedTab is true');
+                return;
+            }
+            
+            console.log('Observer running - updating active states');
+            
+            entries.forEach(entry => {
+                const targetId = entry.target.id;
+                const navItem = document.querySelector(`[data-target="${targetId}"]`);
+                
+                if (entry.isIntersecting) {
+                    // Update left sidebar navigation
+                    // Remove active class from all nav items
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('active');
+                        item.querySelector('.nav-text').classList.remove('active');
+                    });
+                    
+                    // Add active class to current nav item
+                    if (navItem) {
+                        navItem.classList.add('active');
+                        navItem.querySelector('.nav-text').classList.add('active');
+                    }
+                    
+                    // Update right rail navigation (ON THIS PAGE)
+                    // Remove active class from all right rail nav items
+                    document.querySelectorAll('.side-navigation .nav-item').forEach(item => {
+                        item.classList.remove('active');
+                        item.querySelector('.nav-text').classList.remove('active');
+                    });
+                    
+                    // Find and activate the corresponding right rail nav item
+                    const rightRailNavItem = document.querySelector(`.side-navigation .nav-item[data-target="${targetId}"]`);
+                    if (rightRailNavItem) {
+                        rightRailNavItem.classList.add('active');
+                        rightRailNavItem.querySelector('.nav-text').classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all content sections
+        document.querySelectorAll('.content-block').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Reset manual selection when user manually scrolls to a different section
+        // This allows natural navigation to work while preserving manual selections
+        let manualScrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (userHasClickedTab && lastClickedTab) {
+                clearTimeout(manualScrollTimeout);
+                manualScrollTimeout = setTimeout(() => {
+                    // Check if user has scrolled away from the manually selected section
+                    const lastClickedTarget = lastClickedTab.getAttribute('data-target');
+                    const lastClickedSection = document.getElementById(lastClickedTarget);
+                    
+                    if (lastClickedSection) {
+                        const rect = lastClickedSection.getBoundingClientRect();
+                        // If section is not in the center of the viewport, reset manual selection
+                        if (rect.top > window.innerHeight * 0.5 || rect.bottom < window.innerHeight * 0.5) {
+                            userHasClickedTab = false;
+                            lastClickedTab = null;
+                            
+                            // Reconnect the observer for natural navigation
+                            document.querySelectorAll('.content-block').forEach(section => {
+                                observer.observe(section);
+                            });
+                            console.log('Observer reconnected');
+                        }
+                    }
+                }, 500); // Longer delay to avoid interfering with smooth scroll
+            }
+        });
+
+        // Smooth scrolling for navigation clicks
+        document.querySelectorAll('.nav-item[data-target]').forEach(navItem => {
+            navItem.addEventListener('click', () => {
+                const targetId = navItem.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                
+                console.log('Tab clicked:', targetId, 'Setting userHasClickedTab to true');
+                
+                // Set flag that user has manually clicked a tab
+                userHasClickedTab = true;
+                lastClickedTab = navItem;
+                
+                // Completely disconnect the observer to prevent any interference
+                observer.disconnect();
+                console.log('Observer disconnected');
+                
+                // Update left sidebar navigation
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.nav-text').classList.remove('active');
+                });
+                
+                // Add active class to clicked nav item
+                navItem.classList.add('active');
+                navItem.querySelector('.nav-text').classList.add('active');
+                
+                // Update right rail navigation (ON THIS PAGE)
+                // Remove active class from all right rail nav items
+                document.querySelectorAll('.side-navigation .nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.nav-text').classList.remove('active');
+                });
+                
+                // Find and activate the corresponding right rail nav item
+                const rightRailNavItem = document.querySelector(`.side-navigation .nav-item[data-target="${targetId}"]`);
+                if (rightRailNavItem) {
+                    rightRailNavItem.classList.add('active');
+                    rightRailNavItem.querySelector('.nav-text').classList.add('active');
+                }
+                
+                console.log('Active state set for:', targetId, 'userHasClickedTab:', userHasClickedTab);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        
+
+        // Page navigation functionality
+        document.querySelectorAll('.left-side-nav a[data-page]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const targetPage = link.getAttribute('data-page');
+                
+                // Check if this is a dropdown item
+                const isDropdownItem = link.closest('.nav-item-with-dropdown');
+                
+                if (isDropdownItem) {
+                    // For dropdown items, only toggle the dropdown, don't change the page yet
+                    const activeNavItem = link.closest('.nav-item-with-dropdown');
+                    const isExpanded = activeNavItem.classList.contains('expanded');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.nav-item-with-dropdown').forEach(item => {
+                        item.classList.remove('expanded');
+                        const toggle = item.querySelector('.dropdown-toggle');
+                        if (toggle) {
+                            toggle.classList.remove('expanded');
+                        }
+                    });
+                    
+                    // Toggle current dropdown (if it was closed, open it; if open, close it)
+                    if (!isExpanded) {
+                        activeNavItem.classList.add('expanded');
+                        const toggle = activeNavItem.querySelector('.dropdown-toggle');
+                        if (toggle) {
+                            toggle.classList.add('expanded');
+                        }
+                    } else {
+                        activeNavItem.classList.remove('expanded');
+                        const toggle = activeNavItem.querySelector('.dropdown-toggle');
+                        if (toggle) {
+                            toggle.classList.remove('expanded');
+                        }
+                    }
+                } else {
+                    // For non-dropdown items, change the page immediately
+                    // Remove active class from all navigation links
+                    document.querySelectorAll('.left-side-nav a').forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked link
+                    link.classList.add('active');
+                    
+                    // Hide all page content
+                    document.querySelectorAll('.page-content').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show target page
+                    const targetPageElement = document.getElementById(targetPage);
+                    if (targetPageElement) {
+                        targetPageElement.classList.add('active');
+                    }
+                }
+            });
+        });
+
+
+
+        // Sub-navigation tab switching functionality
+        document.querySelectorAll('.sub-nav-link').forEach(subNavLink => {
+            subNavLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const tabName = subNavLink.getAttribute('data-tab');
+                const targetPage = subNavLink.closest('.nav-item-with-dropdown').querySelector('a[data-page]').getAttribute('data-page');
+                
+                // Remove active class from all sub-nav links
+                document.querySelectorAll('.sub-nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                subNavLink.classList.add('active');
+                
+                // Remove active class from all navigation links
+                document.querySelectorAll('.left-side-nav a').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                
+                // Add active class to the parent navigation link
+                const parentNavLink = subNavLink.closest('.nav-item-with-dropdown').querySelector('a[data-page]');
+                parentNavLink.classList.add('active');
+                
+                // Hide all page content
+                document.querySelectorAll('.page-content').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show target page
+                const targetPageElement = document.getElementById(targetPage);
+                if (targetPageElement) {
+                    targetPageElement.classList.add('active');
+                }
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                const selectedContent = document.getElementById(tabName + '-content');
+                if (selectedContent) {
+                    selectedContent.classList.add('active');
+                }
+                
+                // Save the active tab to localStorage and URL
+                localStorage.setItem(PAGE_PARAM, targetPage);
+                localStorage.setItem(TAB_PARAM, tabName);
+                setParam(PAGE_PARAM, targetPage);
+                setParam(TAB_PARAM, tabName);
+                
+                console.log('Saved tab state - Page:', targetPage, 'Tab:', tabName);
+            });
+        });
+    </script>
+</body>
+</html>
